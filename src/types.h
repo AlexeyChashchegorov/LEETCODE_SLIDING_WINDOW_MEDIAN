@@ -12,4 +12,5 @@ using Nums               = std::vector<int>;
 using SlidingWindowPart  = std::multiset<int>;
 using SlidingWindowFront = SlidingWindowPart;
 using SlidingWindowBack  = SlidingWindowPart;
-using SlidingWindow      = std::pair<SlidingWindowFront, SlidingWindowBack>;
+using StartIndex         = size_t;
+using SlidingWindow      = std::tuple<SlidingWindowFront, SlidingWindowBack, StartIndex>;

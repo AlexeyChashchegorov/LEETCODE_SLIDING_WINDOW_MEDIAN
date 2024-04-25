@@ -9,15 +9,16 @@ SlidingWindow Solution::initialSlidingWindow(const Nums& nums, int k) {
 	auto border_iterator = std::next(window.begin(), border_index);
 	SlidingWindowBack back(border_iterator, window.end());
 	window.erase(border_iterator, window.end());
-	return std::make_pair(std::move(window), std::move(back));
+	return std::make_tuple(std::move(window), std::move(back), 0);
 }
 
 Medians Solution::medianSlidingWindow(const Nums& nums, int k) {
 	// TODO: completed implementation
-	auto [front, back] = initialSlidingWindow(nums, k);
+	auto [front, back, start_index] = initialSlidingWindow(nums, k);
 
 	for (const auto& m : front) { std::cout << m << " "; } std::cout << std::endl;
 	for (const auto& m : back) { std::cout << m << " "; } std::cout << std::endl;
+        std::cout << start_index << std::endl;
 
 	return {};
 }
