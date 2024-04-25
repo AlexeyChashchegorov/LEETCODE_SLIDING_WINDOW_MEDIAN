@@ -1,12 +1,10 @@
 #pragma once
 
-#include <vector>
-#include <set>
-#include <utility>
+#include "types.h"
 
 class Solution {
 private:
-    static std::pair<std::multiset<int>, std::multiset<int>> initialSlidingWindow(const std::vector<int>& nums, int k);
+    static SlidingWindow initialSlidingWindow(const Nums& nums, int k);
 public:
-    std::vector<double> medianSlidingWindow(const std::vector<int>& nums, int k);
+    Medians medianSlidingWindow(const Nums& nums, int k);
 };
