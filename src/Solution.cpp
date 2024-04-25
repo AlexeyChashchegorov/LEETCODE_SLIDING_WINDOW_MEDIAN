@@ -61,19 +61,29 @@ SlidingWindow& Solution::move(SlidingWindow& window, const Nums& nums) {
 }
 
 
+double Solution::median(const SlidingWindow& window) {
+	const auto& [ front_part, back_part, _ ] = window;
+	if (front_part.size() == back_part.size())
+		return (double(*prev(front_part.end())) + double(*back_part.begin())) / 2;
+	return *back_part.begin();
+	 
+}
+
 Medians Solution::medianSlidingWindow(const Nums& nums, int k) {
 	// TODO: completed implementation
 	auto window = initialSlidingWindow(nums, k);
 
-	std::cout << "{" ; for (const auto& m : std::get<0>(window)) { std::cout << m << " "; } std::cout << "}";
-	std::cout << "{" ; for (const auto& m : std::get<1>(window)) { std::cout << m << " "; } std::cout << "}" << std::endl;
-        std::cout << std::get<2>(window) << std::endl;
+	Medians ret;
+	auto steps_count = nums.size() - k; 
+	ret.reserve(steps_count);
+	
+	auto m = median(window);
+	ret.emplace_back(median(window));
 
-	for(auto steps_count = nums.size() - k; steps_count !=0; steps_count--) {
-		std::cout << "{" ; for (const auto& m : std::get<0>(move(window, nums))) { std::cout << m << " "; } std::cout << "}";
-		std::cout << "{" ; for (const auto& m : std::get<1>(window)) { std::cout << m << " "; } std::cout << "}" << std::endl;
-        	std::cout << std::get<2>(window) << std::endl;
+	while(steps_count-- != 0) {
+		ret.emplace_back(median(move(window,nums)));
+		m = median(window);
 	}
 
-	return {};
+	return ret;
 }
