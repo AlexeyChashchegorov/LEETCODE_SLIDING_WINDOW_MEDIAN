@@ -1,8 +1,5 @@
 #include "Solution.h"
 
-
-#include <iostream>
-
 SlidingWindow Solution::initialSlidingWindow(const Nums& nums, int k) {
 	SlidingWindowPart window(nums.begin(), std::next(nums.begin(), k));
 	const int border_index = k / 2;
@@ -19,7 +16,7 @@ SlidingWindow& Solution::move(SlidingWindow& window, const Nums& nums) {
 	const auto required_back_part_size = back_part.size();
 
 	
-	// Erasing
+	// Erasing element that coming out of scope
 	const auto value_to_remove = nums[start_index++];
 	if(const auto it_at_front = front_part.find(value_to_remove); it_at_front != front_part.end()) {
 		front_part.erase(it_at_front);
@@ -28,7 +25,7 @@ SlidingWindow& Solution::move(SlidingWindow& window, const Nums& nums) {
 		back_part.erase(it_at_back);
 	}
 
-	// Adding
+	// Adding element that coming in scope
 	const auto value_to_add = nums[start_index + window_size - 1];
 	if(!back_part.empty()) {
 		if (*back_part.begin() > value_to_add)
@@ -45,7 +42,8 @@ SlidingWindow& Solution::move(SlidingWindow& window, const Nums& nums) {
 		back_part.emplace(value_to_add);
 	}
 	
-	// Balanicing
+	// Balanicing front_part and back_part by moving elements from one part to another in case of add/delete on different parts
+	// After balancing we can be sure how to detect the median fast and inline with req speq
 	while (back_part.size() != required_back_part_size) {
 		if (back_part.size() < required_back_part_size) {
 			back_part.emplace(*front_part.rbegin());
